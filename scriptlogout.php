@@ -7,24 +7,17 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ERRORE</title>
+    <title>LOGOUT</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <?php
-      if ($_SESSION["errore"] == "erroreUsername") {
-        echo "<h2 class='text-center text-danger'>Username inesistente</h2>";
-      } else if ($_SESSION["errore"] == "errorePassword") {
-        echo "<h2 class='text-center text-danger'>Password non corretta</h2>";
-      } else if ($_SESSION["errore"] == "usernameNonInserito") {
-        echo "<h2 class='text-center text-danger'>Username non inserito</h2>";
-      } else if ($_SESSION["errore"] == "passwordNonInserita") {
-        echo "<h2 class='text-center text-danger'>Password non inserita</h2>";
-      }
+        session_unset();
     ?>
     <div class="text-center">
+      <h2 class="text-danger">Logout effettuato</h2>
       <a href="paginaLogin.html" class="stileLink">Ritorna al login</a>
     </div>
 

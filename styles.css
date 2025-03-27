@@ -1,4 +1,14 @@
-.dimensioneBottoneAccedi {
+.dimensioneBottoni {
     height: 50px;
     width: 100px;
+}
+
+.stileLink {
+    text-decoration: none;
+    color: black;
+    text-align: center;
+}
+
+.dimensioneIcon {
+    font-size: 50px;
 }
