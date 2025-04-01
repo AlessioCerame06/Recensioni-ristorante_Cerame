@@ -4,7 +4,7 @@
     include("connessione/connessione.php");
 
     if ((empty($_POST["username"])) || (empty($_POST["password"]))) {
-        $_SESSION["errore"] = "credenzialiNonInserite";
+        $_SESSION["erroreLogin"] = "credenzialiNonInserite";
         header("Location: errore_loginreg.php");
         exit;
     } else {
@@ -13,7 +13,7 @@
         $selectUsername = "SELECT password FROM utente WHERE username = '$username';";
         $result = $conn -> query($selectUsername);
         if ($result -> num_rows == 0) {
-            $_SESSION["errore"] = "erroreUsername";
+            $_SESSION["erroreLogin"] = "erroreUsername";
             header("Location: errore_loginreg.php");
             exit;
         } else {
@@ -23,7 +23,7 @@
                 header("Location: benvenuto.php");
                 exit;
             } else {
-                $_SESSION["errore"] = "errorePassword";
+                $_SESSION["erroreLogin"] = "errorePassword";
                 header("Location: errore_loginreg.php");
                 exit;
             }

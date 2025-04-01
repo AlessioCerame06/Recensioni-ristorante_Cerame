@@ -12,3 +12,8 @@
 .dimensioneIcon {
     font-size: 50px;
 }
+
+.stileLinkRegistrazione {
+    text-decoration: none;
+    color: red;
+}
