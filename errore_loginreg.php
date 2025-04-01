@@ -18,10 +18,8 @@
         echo "<h2 class='text-center text-danger'>Username inesistente</h2>";
       } else if ($_SESSION["errore"] == "errorePassword") {
         echo "<h2 class='text-center text-danger'>Password non corretta</h2>";
-      } else if ($_SESSION["errore"] == "usernameNonInserito") {
-        echo "<h2 class='text-center text-danger'>Username non inserito</h2>";
-      } else if ($_SESSION["errore"] == "passwordNonInserita") {
-        echo "<h2 class='text-center text-danger'>Password non inserita</h2>";
+      } else if ($_SESSION["errore"] == "credenzialiNonInserite") {
+        echo "<h2 class='text-center text-danger'>Username e/o password non inseriti</h2>";
       }
     ?>
     <div class="text-center">
