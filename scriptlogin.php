@@ -18,7 +18,8 @@
             exit;
         } else {
             $passwordDB = $result -> fetch_assoc();
-            if ($passwordDB["password"] == $password) {
+            $passwordHash = hash ("sha256", $password);
+            if ($passwordDB["password"] == $passwordHash) {
                 $_SESSION["username"] = $username;
                 header("Location: benvenuto.php");
                 exit;

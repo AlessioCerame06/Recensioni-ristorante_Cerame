@@ -27,6 +27,12 @@
       } else {
         if ($_SESSION["erroreRegistrazione"] == "datiRegistrazioneNonInseriti") {
           echo "<h2 class='text-center text-danger'>Campi della registrazione non inseriti</h2>";
+        } else if ($_SESSION["erroreRegistrazione"] == "usernameEsistente") {
+          echo "<h2 class='text-center text-danger'>Username già esistente</h2>";
+        } else if ($_SESSION["erroreRegistrazione"] == "emailEsistente") {
+          echo "<h2 class='text-center text-danger'>Email già esistente</h2>";
+        } else if ($_SESSION["erroreRegistrazione"] == "utenteNonInserito") {
+          echo "<h2 class='text-center text-danger'>Utente non inserito</h2>";
         }
         $link = false;
         $_SESSION["erroreRegistrazione"] = null;

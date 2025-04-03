@@ -1,5 +1,5 @@
 <?php
-    session_start();
+  session_start();
 ?>
 
 <!doctype html>
@@ -16,6 +16,13 @@
   <body>
     <?php
         echo "<h1 class='text-center text-danger'>Benvenuto " . $_SESSION["username"] . "</h1>";
+        echo "<ul>";
+        echo "<li>Nome: " . $_SESSION["nome"] . "</li>";
+        echo "<li>Cognome: " . $_SESSION["cognome"] . "</li>";
+        echo "<li>Username: " . $_SESSION["username"] . "</li>";
+        echo "<li>Email: " . $_SESSION["email"] . "</li>";
+        echo "<li>Password: " . $_SESSION["password"] . "</li>";
+        echo "</ul>";
     ?>
     
     <div class="m-auto text-center">
