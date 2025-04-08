@@ -1,5 +1,6 @@
 <?php
   session_start();
+  include("connessione/connessione.php");
 ?>
 
 <!doctype html>
@@ -25,6 +26,14 @@
       echo "<li>Password: " . $_SESSION["password"] . "</li>";
       echo "</ul>";
       $_SESSION["primaRegistrazione"] = null;
+    } else {
+      $selectRecensioni = "SELECT COUNT(*) AS n_recensioni FROM recensione r JOIN utente u ON r.idUtente = u.idUtente WHERE u.username = " . $_SESSION["username"] . ";";
+      $result = $conn -> query($selectRecensioni);
+      $row = $result -> fetch_assoc();
+      echo "<h2 class='text-center'>Hai fatto " .  $row["n_recensioni"] . " recensioni</h2>";
+      if ($nRecensioni > 1) {
+
+      }
     }
     ?>
     
