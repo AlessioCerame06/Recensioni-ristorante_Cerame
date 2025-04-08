@@ -5,7 +5,7 @@
 
     if ((empty($_POST["username"])) || (empty($_POST["password"]))) {
         $_SESSION["erroreLogin"] = "credenzialiNonInserite";
-        header("Location: errore_loginreg.php");
+        header("Location: paginalogin.php");
         exit;
     } else {
         $username = $_POST["username"];
@@ -14,7 +14,7 @@
         $result = $conn -> query($selectUsername);
         if ($result -> num_rows == 0) {
             $_SESSION["erroreLogin"] = "erroreUsername";
-            header("Location: errore_loginreg.php");
+            header("Location: paginalogin.php");
             exit;
         } else {
             $passwordDB = $result -> fetch_assoc();
@@ -25,7 +25,7 @@
                 exit;
             } else {
                 $_SESSION["erroreLogin"] = "errorePassword";
-                header("Location: errore_loginreg.php");
+                header("Location: paginalogin.php");
                 exit;
             }
         }  

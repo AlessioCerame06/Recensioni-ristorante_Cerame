@@ -1,3 +1,7 @@
+<?php
+  session_start();
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -34,8 +38,23 @@
             </div>
             <input type="submit" class="border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni" value="REGISTRATI">
         </form> <br>
-        <p>Sei già registrato? <a href="paginalogin.html" class="stileLinkRegistrazione">CLICCA QUI</a></p>
+        <p>Sei già registrato? <a href="paginalogin.php" class="stileLinkRegistrazione">CLICCA QUI</a></p>
     </div>
+
+    <?php
+    if (isset($_SESSION["erroreRegistrazione"])) {
+      if ($_SESSION["erroreRegistrazione"] == "datiRegistrazioneNonInseriti") {
+        echo "<h2 class='text-center text-danger'>Campi della registrazione non inseriti</h2>";
+      } else if ($_SESSION["erroreRegistrazione"] == "usernameEsistente") {
+        echo "<h2 class='text-center text-danger'>Username già esistente</h2>";
+      } else if ($_SESSION["erroreRegistrazione"] == "emailEsistente") {
+        echo "<h2 class='text-center text-danger'>Email già esistente</h2>";
+      } else if ($_SESSION["erroreRegistrazione"] == "utenteNonInserito") {
+        echo "<h2 class='text-center text-danger'>Utente non inserito</h2>";
+      }
+      $_SESSION["erroreRegistrazione"] = null;
+    }
+    ?>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 

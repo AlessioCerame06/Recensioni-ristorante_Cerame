@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>BENVENUTO</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
     rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="./styles/styles.css">
@@ -15,14 +15,17 @@
   </head>
   <body>
     <?php
-        echo "<h1 class='text-center text-danger'>Benvenuto " . $_SESSION["username"] . "</h1>";
-        echo "<ul>";
-        echo "<li>Nome: " . $_SESSION["nome"] . "</li>";
-        echo "<li>Cognome: " . $_SESSION["cognome"] . "</li>";
-        echo "<li>Username: " . $_SESSION["username"] . "</li>";
-        echo "<li>Email: " . $_SESSION["email"] . "</li>";
-        echo "<li>Password: " . $_SESSION["password"] . "</li>";
-        echo "</ul>";
+    echo "<h1 class='text-center text-danger'>Benvenuto " . $_SESSION["username"] . "</h1>";
+    if (isset($_SESSION["primaRegistrazione"])) {
+      echo "<ul>";
+      echo "<li>Nome: " . $_SESSION["nome"] . "</li>";
+      echo "<li>Cognome: " . $_SESSION["cognome"] . "</li>";
+      echo "<li>Username: " . $_SESSION["username"] . "</li>";
+      echo "<li>Email: " . $_SESSION["email"] . "</li>";
+      echo "<li>Password: " . $_SESSION["password"] . "</li>";
+      echo "</ul>";
+      $_SESSION["primaRegistrazione"] = null;
+    }
     ?>
     
     <div class="m-auto text-center">

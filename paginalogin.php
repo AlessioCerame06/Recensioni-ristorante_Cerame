@@ -1,3 +1,7 @@
+<?php
+  session_start();
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -25,8 +29,21 @@
             </div>
             <input type="submit" class="border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni" value="ACCEDI">
         </form> <br>
-        <p>Non sei registrato? <a href="paginaregistrazione.html" class="stileLinkRegistrazione">CLICCA QUI</a></p>
+        <p>Non sei registrato? <a href="paginaregistrazione.php" class="stileLinkRegistrazione">CLICCA QUI</a></p>
     </div>
+
+    <?php
+    if (isset($_SESSION["erroreLogin"])) {
+      if ($_SESSION["erroreLogin"] == "erroreUsername") {
+        echo "<h2 class='text-center text-danger'>Username inesistente</h2>";
+      } else if ($_SESSION["erroreLogin"] == "errorePassword") {
+        echo "<h2 class='text-center text-danger'>Password non corretta</h2>";
+      } else if ($_SESSION["erroreLogin"] == "credenzialiNonInserite") {
+        echo "<h2 class='text-center text-danger'>Username e/o password non inseriti</h2>";
+      }
+      $_SESSION["erroreLogin"] = null;
+    }
+    ?>
 
 
 
