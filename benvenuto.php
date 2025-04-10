@@ -28,14 +28,59 @@
       $_SESSION["primaRegistrazione"] = null;
     } else {
       $selectRecensioni = "SELECT COUNT(*) AS n_recensioni FROM recensione r JOIN utente u ON r.idUtente = u.idUtente WHERE u.username = " . $_SESSION["username"] . ";";
-      $result = $conn -> query($selectRecensioni);
-      $row = $result -> fetch_assoc();
-      echo "<h2 class='text-center'>Hai fatto " .  $row["n_recensioni"] . " recensioni</h2>";
-      if ($nRecensioni > 1) {
-
+      if (!($result = $conn -> query($selectRecensioni))) {
+        echo "<h2 class='text-center'>Nessuna recensione effetuata</h2>";
+      } else {
+        $row = $result -> fetch_assoc();
+        echo "<h2 class='text-center'>Hai fatto " .  $row["n_recensioni"] . " recensioni</h2>";
       }
     }
     ?>
+
+    <div class="text-center m-auto col-10 border border-solid border-2 border-black rounded-pill">
+    <h2 class="text-danger">Fai una recensione</h2>
+    <h3>Compila tutti i campi e clicca sul bottone per inviare una recensione</h3>
+    <div style="margin: 0 30px;">
+    <form action="inseriscirecensione.php" method="get">
+
+    <?php
+    $selectRistoranti = "SELECT nome FROM ristorante;";
+    $res = $conn->query($selectRistoranti);
+    if (!$res) {
+      echo "<h2 class='text-center text-danger'>Nessun ristorante trovato</h2>";
+    } else {
+      echo "<p></p>";
+      echo "<select class='form-select' name='ristorante'>";
+      while ($ristorante = $res->fetch_assoc()) {
+        echo "<option value='" . $ristorante["nome"] . "'>" . $ristorante["nome"] . "</option>";
+      }
+      
+    }
+    ?>
+    </select>
+    <p>Voto</p>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="votoRec" id="votoRec" value="1" checked>
+    <label class="form-check-label" for="votoRec">1</label>
+    </div>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="votoRec" id="votoRec" value="2">
+    <label class="form-check-label" for="votoRec">2</label>
+    </div>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="votoRec" id="votoRec" value="3">
+    <label class="form-check-label" for="votoRec">3</label>
+    </div>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="votoRec" id="votoRec" value="4">
+    <label class="form-check-label" for="votoRec">4</label>
+    </div>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="votoRec" id="votoRec" value="5">
+    <label class="form-check-label" for="votoRec">5</label>
+    </div><br><br>
+    <input type="submit" value="Invia" class="border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni">
+    </form></div><br></div><br>
     
     <div class="m-auto text-center">
         <a href="scriptlogout.php"><button class="border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni">Logout <i class="bi bi-box-arrow-right text-white"></i></button></a>
