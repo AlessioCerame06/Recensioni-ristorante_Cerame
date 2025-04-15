@@ -80,6 +80,16 @@
     <label class="form-check-label" for="votoRec">5</label>
     </div><br><br>
     <input type="submit" value="Invia" class="border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni">
+    <?php
+      if ($_SESSION["errore"] == "erroreInserimentoRecensione") {
+        echo "<h2 class='text-center text-danger'>Recensione non inserita. Riprovare</h2>";
+        $_SESSION["errore"] = null;
+      } else if (isset($_SESSION["esitoInsertRecensione"]) && $_SESSION["esitoInsertRecensione"] == true) {
+        echo "<h2 class='text-center text-success'>Recensione inserita correttamente</h2>";
+        $_SESSION["esitoInsertRecensione"] = false;
+
+      }
+    ?>
     </form></div><br></div><br>
     
     <div class="m-auto text-center">
