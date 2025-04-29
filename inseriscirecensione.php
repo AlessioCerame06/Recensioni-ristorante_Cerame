@@ -5,9 +5,12 @@
     $voto = $_GET["votoRec"];
     $votoIntero = intval($voto);
     $data = date("y-m-d");
-    $idUtente = $conn -> query("SELECT idUtente FROM utente WHERE username = " . $_SESSION["username"] . ";");
-    $codRistorante = $conn -> query("SELECT codRistorante FROM ristorante WHERE nome = $nomeRistorante;");
-    $insertRecensione = "INSERT INTO recensione(voto, data, idUtente, codiceRistorante) VALUES ($votoIntero, '$data', '$idUtente', '$codRistorante')";
+    $us = $_SESSION["username"];
+    $idUtente = $conn -> query("SELECT idUtente FROM utente WHERE username = '$us'");
+    $codRistorante = $conn -> query("SELECT codiceRistorante FROM ristorante WHERE nome = '$nomeRistorante'");
+    $id = $idUtente->fetch_assoc()["idUtente"];
+    $cod = $codRistorante->fetch_assoc()["codiceRistorante"];
+    $insertRecensione = "INSERT INTO recensione(voto, data, idUtente, codiceRistorante) VALUES ($votoIntero, '$data', '$id', '$cod')";
     if (!($result = $conn -> query($insertRecensione))) {
         $_SESSION["errore"] = "erroreInserimentoRecensione";
     } else {

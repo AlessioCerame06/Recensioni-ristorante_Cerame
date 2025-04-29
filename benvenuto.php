@@ -81,7 +81,7 @@
     </div><br><br>
     <input type="submit" value="Invia" class="border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni">
     <?php
-      if ($_SESSION["errore"] == "erroreInserimentoRecensione") {
+      if (isset($_SESSION["errore"]) && $_SESSION["errore"] == "erroreInserimentoRecensione") {
         echo "<h2 class='text-center text-danger'>Recensione non inserita. Riprovare</h2>";
         $_SESSION["errore"] = null;
       } else if (isset($_SESSION["esitoInsertRecensione"]) && $_SESSION["esitoInsertRecensione"] == true) {
