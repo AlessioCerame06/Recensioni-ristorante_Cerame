@@ -27,12 +27,26 @@
       echo "</ul>";
       $_SESSION["primaRegistrazione"] = null;
     } else {
-      $selectRecensioni = "SELECT COUNT(*) AS n_recensioni FROM recensione r JOIN utente u ON r.idUtente = u.idUtente WHERE u.username = " . $_SESSION["username"] . ";";
-      if (!($result = $conn -> query($selectRecensioni))) {
+      $selectNumRecensioni = "SELECT COUNT(*) AS n_recensioni FROM recensione r JOIN utente u ON r.idUtente = u.idUtente WHERE u.username = " . $_SESSION["username"] . ";";
+      if (!($result = $conn -> query($selectNumRecensioni))) {
         echo "<h2 class='text-center'>Nessuna recensione effetuata</h2>";
       } else {
         $row = $result -> fetch_assoc();
         echo "<h2 class='text-center'>Hai fatto " .  $row["n_recensioni"] . " recensioni</h2>";
+        $selectRecensioni = "SELECT idUtente, voto, data, idUtente, codiceRistorante FROM recensioni WHERE username = " . $_SESSION["username"];
+        $result = $conn -> query($selectRecensioni);
+        echo "<table class='table table-striped'>";
+        echo "<tr><th>Voto</th><th>Data</th><th>Utente</th><th>Ristorante</th></tr>";
+        while ($recensione = $result -> fetch_assoc()) {
+          $selectUtente = "SELECT username FROM utente WHERE idUtente = " . $recensione["idUtente"];
+          $utente = $conn -> query($selectUtente);
+          $ut = $utente -> fetch_assoc();
+          $selectRistorante = "SELECT nome FROM ristorante WHERE codiceRistorante = " . $recensione["codiceRistorante"];
+          $ristorante = $conn -> query($selectRistorante);
+          $ri = $ristorante -> fetch_assoc();
+          echo "<tr><td>" . $recensione["voto"] . "</td><td> " . $recensione["data"] . "</td><td>" . $ut["username"] . "</td><td> " . $ri["nome"] . "</td></tr>";
+        }
+        echo "</table>"
       }
     }
     ?>
