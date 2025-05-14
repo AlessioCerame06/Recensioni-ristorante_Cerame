@@ -1,0 +1,81 @@
+<doctype>
+<html>
+    <head>
+        <title>ADMIN</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="./styles/styles.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    </head>
+    <body>
+
+<?php
+session_start();
+include("connessione/connessione.php");
+
+if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true) {
+    header("Location: paginalogin.php");
+    exit;
+}
+
+$sql = "SELECT r.*, COUNT(rec.id) as num_recensioni
+        FROM ristoranti r
+        LEFT JOIN recensioni rec ON r.id = rec.id_ristorante
+        GROUP BY r.id";
+$result = $conn->query($sql);
+
+echo "<h2>Ristoranti</h2>";
+if ($result->num_rows > 0) {
+    echo "<table style=''><tr><th>ID</th><th>Nome</th><th>Indirizzo</th><th>Città</th><th>Recensioni</th></tr>";
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr><td>{$row['id']}</td><td>{$row['nome']}</td><td>{$row['indirizzo']}</td><td>{$row['citta']}</td><td>{$row['num_recensioni']}</td></tr>";
+    }
+    echo "</table>";
+} else {
+    echo "Nessuna ristorante presente";
+}
+
+if (isset($_SESSION['esito_inserimento'])) {
+    echo "<p>{$_SESSION['esito_inserimento']}</p>";
+    unset($_SESSION['esito_inserimento']);
+}
+?>
+
+        <h2 class="text-center text-danger">INSERISCI UN NUOVO RISTORANTE</h2>
+        <i class="bi bi-building-add"></i>
+        <h3>Compila tutti i campi per inserire un nuovo ristorante</h3>
+        <form action="inserisciristorante.php" method="post">
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><i class="bi bi-type"></i></span>
+                <input type="text" class="form-control" placeholder="Nome" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><i class="bi bi-signpost-split-fill"></i></span>
+                <input type="text" class="form-control" placeholder="Indirizzo" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><i class="bi bi-geo-alt-fill"></i></span>
+                <input type="text" class="form-control" placeholder="Città" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <button type="submit" class="border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni">Inserisci</button>
+        </form>
+        <?php
+        if(isset($_SESSION['esito_inserimento'])) {
+            if ($_SESSION['esito_inserimento'] == "Ristorante inserito con successo") {
+                echo "<h2 class='text-center text-success'>Ristorante inserito con successo</h2>";
+            } else {
+                echo "<h2 class='text-center text-danger'>Ristorante non inserito con successo</h2>";
+            }
+            $_SESSION['esito_inserimento'] = null;
+        }
+        ?>
+
+        <div class="m-auto text-center">
+            <a href="scriptlogout.php"><button class="border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni">Logout <i class="bi bi-box-arrow-right text-white"></i></button></a>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </body>
+</html>

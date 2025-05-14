@@ -16,6 +16,12 @@
   </head>
   <body>
     <?php
+    if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
+      $_SESSION['admin'] = null;
+      header("Location: pannelloadmin.php");
+      exit;
+    }
+
     echo "<h1 class='text-center text-danger'>Benvenuto " . $_SESSION["username"] . "</h1>";
     if (isset($_SESSION["primaRegistrazione"])) {
       echo "<ul>";
@@ -46,7 +52,7 @@
           $ri = $ristorante -> fetch_assoc();
           echo "<tr><td>" . $recensione["voto"] . "</td><td> " . $recensione["data"] . "</td><td>" . $ut["username"] . "</td><td> " . $ri["nome"] . "</td></tr>";
         }
-        echo "</table>"
+        echo "</table>";
       }
     }
     ?>
@@ -111,7 +117,7 @@
     </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
 </html>

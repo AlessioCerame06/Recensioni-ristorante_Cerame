@@ -10,7 +10,7 @@
     } else {
         $username = $_POST["username"];
         $password = $_POST["password"];
-        $selectUsername = "SELECT password FROM utente WHERE username = '$username';";
+        $selectUsername = "SELECT password, admin FROM utente WHERE username = '$username';";
         $result = $conn -> query($selectUsername);
         if ($result -> num_rows == 0) {
             $_SESSION["erroreLogin"] = "erroreUsername";
@@ -21,6 +21,7 @@
             $passwordHash = hash ("sha256", $password);
             if ($passwordDB["password"] == $passwordHash) {
                 $_SESSION["username"] = $username;
+                $_SESSION['admin'] = $passwordDB['admin'];
                 header("Location: benvenuto.php");
                 exit;
             } else {
