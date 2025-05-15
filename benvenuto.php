@@ -1,6 +1,10 @@
 <?php
   session_start();
   include("connessione/connessione.php");
+  if ($_SESSION["admin"] === true) {
+    header("Location: pannelloadmin.php");
+    exit;
+  }
 ?>
 
 <!doctype html>
@@ -16,11 +20,7 @@
   </head>
   <body>
     <?php
-    if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
-      $_SESSION['admin'] = null;
-      header("Location: pannelloadmin.php");
-      exit;
-    }
+
 
     echo "<h1 class='text-center text-danger'>Benvenuto " . $_SESSION["username"] . "</h1>";
     if (isset($_SESSION["primaRegistrazione"])) {
@@ -34,7 +34,7 @@
       $_SESSION["primaRegistrazione"] = null;
     } else {
       $selectNumRecensioni = "SELECT COUNT(*) AS n_recensioni FROM recensione r JOIN utente u ON r.idUtente = u.idUtente WHERE u.username = " . $_SESSION["username"] . ";";
-      if (!($result = $conn -> query($selectNumRecensioni))) {
+      if (($result = $conn -> query($selectNumRecensioni)) == 0) {
         echo "<h2 class='text-center'>Nessuna recensione effetuata</h2>";
       } else {
         $row = $result -> fetch_assoc();

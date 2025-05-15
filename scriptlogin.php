@@ -2,7 +2,7 @@
     session_start();
 
     include("connessione/connessione.php");
-
+    $_SESSION["admin"] == false;
     if ((empty($_POST["username"])) || (empty($_POST["password"]))) {
         $_SESSION["erroreLogin"] = "credenzialiNonInserite";
         header("Location: paginalogin.php");
@@ -17,11 +17,12 @@
             header("Location: paginalogin.php");
             exit;
         } else {
-            $passwordDB = $result -> fetch_assoc();
+            $elementi = $result -> fetch_assoc();
             $passwordHash = hash ("sha256", $password);
-            if ($passwordDB["password"] == $passwordHash) {
+            if ($elementi["password"] == $passwordHash) {
                 $_SESSION["username"] = $username;
-                $_SESSION['admin'] = $passwordDB['admin'];
+                $_SESSION["admin"] = $elementi["admin"];
+                $_SESSION["admin"] = $elementi["admin"] == "1";
                 header("Location: benvenuto.php");
                 exit;
             } else {
