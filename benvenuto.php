@@ -1,7 +1,7 @@
 <?php
   session_start();
   include("connessione/connessione.php");
-  if ($_SESSION["admin"] === true) {
+  if (isset($_SESSION["admin"]) && $_SESSION["admin"] === true) {
     header("Location: pannelloadmin.php");
     exit;
   }
@@ -24,7 +24,7 @@
 
     echo "<h1 class='text-center text-danger'>Benvenuto " . $_SESSION["username"] . "</h1>";
     if (isset($_SESSION["primaRegistrazione"])) {
-      echo "<ul>";
+      echo "<ul class='text-center border border-2 border-solid border-black m-auto w-50'>";
       echo "<li>Nome: " . $_SESSION["nome"] . "</li>";
       echo "<li>Cognome: " . $_SESSION["cognome"] . "</li>";
       echo "<li>Username: " . $_SESSION["username"] . "</li>";
@@ -33,29 +33,48 @@
       echo "</ul>";
       $_SESSION["primaRegistrazione"] = null;
     } else {
-      $selectNumRecensioni = "SELECT COUNT(*) AS n_recensioni FROM recensione r JOIN utente u ON r.idUtente = u.idUtente WHERE u.username = " . $_SESSION["username"] . ";";
-      if (($result = $conn -> query($selectNumRecensioni)) == 0) {
-        echo "<h2 class='text-center'>Nessuna recensione effetuata</h2>";
+      $username = $_SESSION["username"];
+
+      $selectUtente = "SELECT idUtente FROM utente WHERE username = '$username'";
+      $utente = $conn->query($selectUtente);
+      $ut = $utente->fetch_assoc();
+
+      $idUtente = $ut['idUtente'];
+      $selectNumRecensioni = "SELECT COUNT(*) AS n_recensioni FROM recensione WHERE idUtente = '$idUtente'";
+      $result = $conn->query($selectNumRecensioni);
+      $n_recensioni = $result->fetch_assoc()["n_recensioni"];
+
+      if ($n_recensioni == 0) {
+          echo "<h2 class='text-center'>Nessuna recensione effettuata</h2>";
       } else {
-        $row = $result -> fetch_assoc();
-        echo "<h2 class='text-center'>Hai fatto " .  $row["n_recensioni"] . " recensioni</h2>";
-        $selectRecensioni = "SELECT idUtente, voto, data, idUtente, codiceRistorante FROM recensioni WHERE username = " . $_SESSION["username"];
-        $result = $conn -> query($selectRecensioni);
-        echo "<table class='table table-striped'>";
-        echo "<tr><th>Voto</th><th>Data</th><th>Utente</th><th>Ristorante</th></tr>";
-        while ($recensione = $result -> fetch_assoc()) {
-          $selectUtente = "SELECT username FROM utente WHERE idUtente = " . $recensione["idUtente"];
-          $utente = $conn -> query($selectUtente);
-          $ut = $utente -> fetch_assoc();
-          $selectRistorante = "SELECT nome FROM ristorante WHERE codiceRistorante = " . $recensione["codiceRistorante"];
-          $ristorante = $conn -> query($selectRistorante);
-          $ri = $ristorante -> fetch_assoc();
-          echo "<tr><td>" . $recensione["voto"] . "</td><td> " . $recensione["data"] . "</td><td>" . $ut["username"] . "</td><td> " . $ri["nome"] . "</td></tr>";
-        }
-        echo "</table>";
+          $testo = ($n_recensioni == 1) ? "recensione" : "recensioni";
+          echo "<h2 class='text-center'>Hai fatto $n_recensioni $testo</h2>";
+          $selectRecensioni = "
+              SELECT r.voto, r.data, rst.nome AS nomeRistorante 
+              FROM recensione r 
+              JOIN ristorante rst ON r.codiceRistorante = rst.codiceRistorante 
+              WHERE r.idUtente = '$idUtente'
+              ORDER BY r.data DESC;
+          ";
+          $result = $conn->query($selectRecensioni);
+
+          echo "<table class='table table-striped w-75 text-center m-auto'>";
+          echo "<tr><th>Voto</th><th>Data</th><th>Ristorante</th></tr>";
+
+          while ($recensione = $result->fetch_assoc()) {
+              echo "<tr>";
+              echo "<td>" . $recensione["voto"] . "</td>";
+              echo "<td>" . $recensione["data"] . "</td>";
+              echo "<td>" . $recensione["nomeRistorante"] . "</td>";
+              echo "</tr>";
+          }
+
+          echo "</table>";
       }
+
     }
     ?>
+    <br />
 
     <div class="text-center m-auto col-10 border border-solid border-2 border-black rounded-pill">
     <h2 class="text-danger">Fai una recensione</h2>
