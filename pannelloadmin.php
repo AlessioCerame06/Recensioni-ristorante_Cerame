@@ -28,7 +28,7 @@ $sql = "SELECT r.*, COUNT(rec.idRecensione) as num_recensioni
 
 if ($result -> num_rows > 0) {
     echo "<h2 class='text-center'>Ristoranti</h2>";
-    echo "<table class='table table-striped'><tr><th>Nome</th><th>Indirizzo</th><th>Città</th><th>Recensioni</th></tr>";
+    echo "<table class='table table-striped m-auto text-center w-75'><tr><th>Nome</th><th>Indirizzo</th><th>Città</th><th>Recensioni</th></tr>";
     while ($row = $result->fetch_assoc()) {
         echo "<tr><td>{$row['nome']}</td><td>{$row['indirizzo']}</td><td>{$row['citta']}</td><td>{$row['num_recensioni']}</td></tr>";
     }
@@ -37,31 +37,31 @@ if ($result -> num_rows > 0) {
     echo "<h2 class='text-center'>Nessun ristorante presente</h2>";
 }
 
-if (isset($_SESSION['esito_inserimento'])) {
-    echo "<p>{$_SESSION['esito_inserimento']}</p>";
-    unset($_SESSION['esito_inserimento']);
-}
 ?>
-        <div class="text-center m-auto w-50">
-            <h2 class="text-center text-danger">INSERISCI UN NUOVO RISTORANTE</h2>
-                <i class="bi bi-building-add dimensioneIcon"></i>
-            <h3>Compila tutti i campi per inserire un nuovo ristorante</h3>
-            <form action="inserisciristorante.php" method="post">
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1"><i class="bi bi-type"></i></span>
-                    <input type="text" class="form-control" placeholder="Nome" aria-label="Username" aria-describedby="basic-addon1">
-                </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1"><i class="bi bi-signpost-split-fill"></i></span>
-                    <input type="text" class="form-control" placeholder="Indirizzo" aria-label="Username" aria-describedby="basic-addon1">
-                </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1"><i class="bi bi-geo-alt-fill"></i></span>
-                    <input type="text" class="form-control" placeholder="Città" aria-label="Username" aria-describedby="basic-addon1">
-                </div>
-                <button type="submit" class="border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni">Inserisci</button>
-            </form>
+<br />
+<div class="text-center mx-auto w-75 border border-2 border-black rounded-pill p-4">
+    <h2 class="text-center text-danger">INSERISCI UN NUOVO RISTORANTE</h2>
+    <i class="bi bi-building-add dimensioneIcon"></i>
+    <h3>Compila tutti i campi per inserire un nuovo ristorante</h3>
+    <form action="inserisciristorante.php" method="post">
+        <div class="input-group mb-3">
+            <span class="input-group-text"><i class="bi bi-type"></i></span>
+            <input type="text" class="form-control" placeholder="Nome" name="nome" required>
         </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text"><i class="bi bi-signpost-split-fill"></i></span>
+            <input type="text" class="form-control" placeholder="Indirizzo" name="indirizzo" required>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+            <input type="text" class="form-control" placeholder="Città" name="citta" required>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary text-white rounded-4 dimensioneBottoni">Inserisci</button>
+    </form>
+</div>
+<br />
+
         <?php
         if(isset($_SESSION['esito_inserimento'])) {
             if ($_SESSION['esito_inserimento'] == "Ristorante inserito con successo") {
