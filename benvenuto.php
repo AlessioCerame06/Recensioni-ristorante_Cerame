@@ -88,7 +88,6 @@
     if (!$res) {
       echo "<h2 class='text-center text-danger'>Nessun ristorante trovato</h2>";
     } else {
-      echo "<p></p>";
       echo "<select class='form-select' name='ristorante'>";
       while ($ristorante = $res->fetch_assoc()) {
         echo "<option value='" . $ristorante["nome"] . "'>" . $ristorante["nome"] . "</option>";
@@ -117,7 +116,7 @@
     <div class="form-check form-check-inline">
     <input class="form-check-input" type="radio" name="votoRec" id="votoRec" value="5">
     <label class="form-check-label" for="votoRec">5</label>
-    </div><br><br>
+    </div><br /><br />
     <input type="submit" value="Invia" class="border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni">
     <?php
       if (isset($_SESSION["errore"]) && $_SESSION["errore"] == "erroreInserimentoRecensione") {
@@ -129,7 +128,30 @@
 
       }
     ?>
-    </form></div><br></div><br>
+    </form></div><br /></div><br />
+    <div class="col-10 border border-solid border-2 border-black rounded-pill m-auto text-center">
+      <h2 class="text-center text-danger">Lista ristoranti</h2>
+    <?php
+    $selectRistoranti = "SELECT nome FROM ristorante;";
+    $res = $conn->query($selectRistoranti);
+    if (!$res) {
+      echo "<h2 class='text-danger'>Nessun ristorante trovato</h2>";
+    } else {
+      echo "<div style='margin: 0 30px;'>";
+      echo "<form action='info_ristorante.php' method='get'>";
+      echo "<select class='form-select' name='infoRistorante'>";
+      while ($ristorante = $res->fetch_assoc()) {
+        echo "<option value='" . $ristorante["nome"] . "'>" . $ristorante["nome"] . "</option>";
+      }
+      echo "</select>";
+      echo "<br />";
+      echo "<input type='submit' value='Invia' class='border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni'>";
+      echo "</form>";
+      echo "<br />";
+      echo "</div>";
+    }
+    ?>
+    </div> <br />
     
     <div class="m-auto text-center">
         <a href="scriptlogout.php"><button class="border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni">Logout <i class="bi bi-box-arrow-right text-white"></i></button></a>
