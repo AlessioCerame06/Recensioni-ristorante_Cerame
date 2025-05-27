@@ -2,21 +2,29 @@
 session_start();
 include("connessione/connessione.php");
 
-$nome = $_POST['nome'];
-$indirizzo = $_POST['indirizzo'];
-$citta = $_POST['citta'];
+$nome = $_POST["nome"];
+$indirizzo = $_POST["indirizzo"];
+$citta = $_POST["citta"];
+$latitudine = $_POST["latitudine"];
+$longitudine = $_POST["longitudine"];
+
 
 $selectRistoranti = "SELECT COUNT(codiceRistorante) AS n_codici FROM ristorante";
 $result1 = $conn->query($selectRistoranti);
 
 if (!$result1) {
-    $codiceRistorante = "cod1";
+    $codiceRistorante = "ris1";
 } else {
     $row = $result1->fetch_assoc();
-    $codiceRistorante = "cod" . ($row["n_codici"] + 1);
+    if (($row["n_codici"] + 1) < 10 ) {
+        $codiceRistorante = "ris0" . ($row["n_codici"] + 1);
+    } else {
+        $codiceRistorante = "ris" . ($row["n_codici"] + 1);
+    }
 }
 
-$insertRistorante = "INSERT INTO ristorante (codiceRistorante, nome, indirizzo, citta) VALUES ('$codiceRistorante', '$nome', '$indirizzo', '$citta')";
+$insertRistorante = "INSERT INTO ristorante (codiceRistorante, nome, indirizzo, citta, latitudine, longitudine) 
+                    VALUES ('$codiceRistorante', '$nome', '$indirizzo', '$citta', $latitudine, $longitudine)";
 $result2 = $conn->query($insertRistorante);
 
 if ($result2) {

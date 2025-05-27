@@ -21,6 +21,8 @@
     integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   </head>
   <body>
     <div class="container">
@@ -66,12 +68,29 @@
 
                 echo "</table>";
             }
+            
+            $selectCoordinate = "SELECT latitudine, longitudine FROM ristorante WHERE nome = '$nome'";
+            $result = $conn -> query($selectCoordinate);
+            $row = $result -> fetch_assoc();
+            
         ?>
 
         <br />
-        <div class="m-auto text-center">
-            <a href="benvenuto.php"><button class="border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni">Indietro</button></a>
-        </div>
+    </div>
+    <br />
+    <div id="map" class="w-75 m-auto">
+    <script>
+        var map = L.map('map').setView([<?php echo $row["latitudine"] ?>, <?php echo $row["longitudine"] ?>], 16);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+        var marker = L.marker([<?php echo $row["latitudine"] ?>, <?php echo $row["longitudine"] ?>]).addTo(map);
+    </script>
+    </div>
+    <br />
+    <div class="m-auto text-center">
+        <a href="benvenuto.php"><button class="border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni">Indietro</button></a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" 

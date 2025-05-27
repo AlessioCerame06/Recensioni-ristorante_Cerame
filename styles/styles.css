@@ -21,3 +21,5 @@
 body {
     overflow-x: hidden;
 }
+
+#map { height: 300px; }

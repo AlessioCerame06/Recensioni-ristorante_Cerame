@@ -39,7 +39,7 @@ if ($result -> num_rows > 0) {
 
 ?>
 <br />
-<div class="text-center mx-auto w-75 border border-2 border-black rounded-pill p-4">
+<div class="text-center mx-auto w-75 border border-2 border-black p-4">
     <h2 class="text-center text-danger">INSERISCI UN NUOVO RISTORANTE</h2>
     <i class="bi bi-building-add dimensioneIcon"></i>
     <h3>Compila tutti i campi per inserire un nuovo ristorante</h3>
@@ -56,12 +56,13 @@ if ($result -> num_rows > 0) {
             <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
             <input type="text" class="form-control" placeholder="Città" name="citta" required>
         </div>
+        <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-geo"></i></span>
+            <input type="text" aria-label="latitudine" class="form-control" placeholder="Latidudine" required>
+            <input type="text" aria-label="longitudine" class="form-control" placeholder="Longitudine" required>
+        </div>
         <br />
         <button type="submit" class="btn btn-primary text-white rounded-4 dimensioneBottoni">Inserisci</button>
-    </form>
-</div>
-<br />
-
         <?php
         if(isset($_SESSION['esito_inserimento'])) {
             if ($_SESSION['esito_inserimento'] == "Ristorante inserito con successo") {
@@ -72,6 +73,9 @@ if ($result -> num_rows > 0) {
             $_SESSION['esito_inserimento'] = null;
         }
         ?>
+    </form>
+</div>
+<br />
 
         <div class="m-auto text-center">
             <a href="scriptlogout.php"><button class="border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni">Logout <i class="bi bi-box-arrow-right text-white"></i></button></a>
