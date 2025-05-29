@@ -91,7 +91,8 @@
     <br />
     <div class="m-auto text-center">
         <a href="benvenuto.php"><button class="border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni">Indietro</button></a>
-    </div>
+    </div> 
+    <br />
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>

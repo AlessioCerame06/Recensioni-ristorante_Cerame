@@ -50,7 +50,7 @@
           $testo = ($n_recensioni == 1) ? "recensione" : "recensioni";
           echo "<h2 class='text-center'>Hai fatto $n_recensioni $testo</h2>";
           $selectRecensioni = "
-              SELECT r.voto, r.data, rst.nome AS nomeRistorante 
+              SELECT r.voto, r.data, r.idRecensione, rst.nome AS nomeRistorante
               FROM recensione r 
               JOIN ristorante rst ON r.codiceRistorante = rst.codiceRistorante 
               WHERE r.idUtente = '$idUtente'
@@ -58,18 +58,27 @@
           ";
           $result = $conn->query($selectRecensioni);
 
+          echo "<form action='elimina_recensioni.php' method='get'>";
           echo "<table class='table table-striped w-75 text-center m-auto'>";
-          echo "<tr><th>Voto</th><th>Data</th><th>Ristorante</th></tr>";
+          echo "<tr><th>Voto</th><th>Data</th><th>Ristorante</th><th>ELIMINA?</th></tr>";
 
           while ($recensione = $result->fetch_assoc()) {
-              echo "<tr>";
-              echo "<td>" . $recensione["voto"] . "</td>";
-              echo "<td>" . $recensione["data"] . "</td>";
-              echo "<td>" . $recensione["nomeRistorante"] . "</td>";
-              echo "</tr>";
+            echo "<tr>";
+            echo "<td>" . $recensione["voto"] . "</td>";
+            echo "<td>" . $recensione["data"] . "</td>";
+            echo "<td>" . $recensione["nomeRistorante"] . "</td>";
+            echo "<td><input type='checkbox' name='recensioni[]' value='" . $recensione["idRecensione"] . "'></td>";
+            echo "</tr>";
           }
 
-          echo "</table>";
+          echo "</table> <br />
+          <div class='m-auto text-center'>
+          <input type='submit' value='Elimina' class='border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni'></div></form>";
+          if (isset($_SESSION["esitoCheckbox"]) && $_SESSION["esitoCheckbox"] == "nessunaCheckboxSelezionata") {
+            echo "<h2 class='text-center text-danger'>Nessuna checkbox selezionata</h2>";
+          } else if ($_SESSION["esitoCheckbox"] == "eliminazioneEffetuata") {
+            echo "<h2 class='text-center text-success'>Sono state eliminate " . $_SESSION["nCheckbox"] . " recensioni</h2>";
+          }
       }
 
     }
@@ -156,6 +165,7 @@
     <div class="m-auto text-center">
         <a href="scriptlogout.php"><button class="border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni">Logout <i class="bi bi-box-arrow-right text-white"></i></button></a>
     </div>
+    <br />
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
