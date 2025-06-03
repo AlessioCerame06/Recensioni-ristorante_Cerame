@@ -19,6 +19,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   </head>
   <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="profilo.php"><i class="bi bi-person-circle"></i> Profilo</a>
+    <a href="scriptlogout.php"><button class="border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni">Logout <i class="bi bi-box-arrow-right text-white"></i></button></a>
+</nav>
     <?php
 
 
@@ -165,30 +170,6 @@
     ?>
     </div> <br />
 
-    <div class="col-10 border border-solid border-2 border-black m-auto text-center">
-      <h2 class="text-center text-danger">Cambio password</h2>
-      <form action="cambio_password.php" method="post">
-        <div class="input-group mb-3 w-75 text-center m-auto">
-          <span class="input-group-text" id="basic-addon1"><i class="bi bi-lock-fill"></i></span>
-          <input type="password" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1" name="password">
-        </div>
-        <input type='submit' value='Cambia' class='border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni'>
-      </form> <br />
-      <?php
-        if (isset($_SESSION["erroreCambioPassword"]) && $_SESSION["erroreCambioPassword"] == "passwordModificata") {
-          echo "<h2 class='text-center text-success'>Password modificata corretamente</h2>";
-          $_SESSION["erroreCambioPassword"] = null;
-        } else if (isset($_SESSION["erroreCambioPassword"]) && $_SESSION["erroreCambioPassword"] == "passwordUguale") {
-          echo "<h2 class='text-center text-danger'>Le due password sono uguali</h2>";
-          $_SESSION["erroreCambioPassword"] = null;
-        }
-      ?>
-    </div> <br />
-    
-    <div class="m-auto text-center">
-        <a href="scriptlogout.php"><button class="border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni">Logout <i class="bi bi-box-arrow-right text-white"></i></button></a>
-    </div>
-    <br />
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

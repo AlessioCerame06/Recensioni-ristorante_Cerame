@@ -9,13 +9,13 @@ $passDB = $result -> fetch_assoc();
 $passInseritaHashata = hash("sha256", $passInserita);
 if ($passInseritaHashata == $passDB["password"]) {
     $_SESSION["erroreCambioPassword"] = "passwordUguale";
-    header("Location: benvenuto.php");
+    header("Location: profilo.php");
     exit;
 }
 $updatePassword = "UPDATE utente SET password = '$passInseritaHashata' WHERE username = '" . $_SESSION["username"] . "'";
 $result = $conn -> query($updatePassword);
 $_SESSION["erroreCambioPassword"] = "passwordModificata";
 
-header("Location: benvenuto.php");
+header("Location: profilo.php");
 exit;
 ?>
