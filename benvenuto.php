@@ -58,7 +58,7 @@
           ";
           $result = $conn->query($selectRecensioni);
 
-          echo "<form action='elimina_recensioni.php' method='get'>";
+          echo "<form action='elimina_recensioni.php' method='post'>";
           echo "<table class='table table-striped w-75 text-center m-auto'>";
           echo "<tr><th>Voto</th><th>Data</th><th>Ristorante</th><th>ELIMINA?</th></tr>";
 
@@ -80,6 +80,7 @@
           } else if (isset($_SESSION["esitoCheckbox"]) && $_SESSION["esitoCheckbox"] == "eliminazioneEffetuata") {
             echo "<h2 class='text-center text-success'>Sono state eliminate " . $_SESSION["nCheckbox"] . " recensioni</h2>";
             $_SESSION["esitoCheckbox"] = null;
+            $_SESSION["nCheckbox"] = 0;
           }
       }
 
