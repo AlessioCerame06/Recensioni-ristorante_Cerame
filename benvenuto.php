@@ -76,8 +76,10 @@
           <input type='submit' value='Elimina' class='border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni'></div></form>";
           if (isset($_SESSION["esitoCheckbox"]) && $_SESSION["esitoCheckbox"] == "nessunaCheckboxSelezionata") {
             echo "<h2 class='text-center text-danger'>Nessuna checkbox selezionata</h2>";
+            $_SESSION["esitoCheckbox"] = null;
           } else if (isset($_SESSION["esitoCheckbox"]) && $_SESSION["esitoCheckbox"] == "eliminazioneEffetuata") {
             echo "<h2 class='text-center text-success'>Sono state eliminate " . $_SESSION["nCheckbox"] . " recensioni</h2>";
+            $_SESSION["esitoCheckbox"] = null;
           }
       }
 
@@ -167,10 +169,19 @@
       <form action="cambio_password.php" method="post">
         <div class="input-group mb-3 w-75 text-center m-auto">
           <span class="input-group-text" id="basic-addon1"><i class="bi bi-lock-fill"></i></span>
-          <input type="password" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1" id="password">
+          <input type="password" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1" name="password">
         </div>
-        <input type='submit' value='Elimina' class='border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni'>
+        <input type='submit' value='Cambia' class='border border-solid border-black bg-primary text-white rounded-4 dimensioneBottoni'>
       </form> <br />
+      <?php
+        if (isset($_SESSION["erroreCambioPassword"]) && $_SESSION["erroreCambioPassword"] == "passwordModificata") {
+          echo "<h2 class='text-center text-success'>Password modificata corretamente</h2>";
+          $_SESSION["erroreCambioPassword"] = null;
+        } else if (isset($_SESSION["erroreCambioPassword"]) && $_SESSION["erroreCambioPassword"] == "passwordUguale") {
+          echo "<h2 class='text-center text-danger'>Le due password sono uguali</h2>";
+          $_SESSION["erroreCambioPassword"] = null;
+        }
+      ?>
     </div> <br />
     
     <div class="m-auto text-center">
