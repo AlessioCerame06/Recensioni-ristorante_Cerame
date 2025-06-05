@@ -15,6 +15,34 @@ include("connessione/connessione.php");
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   </head>
   <body>
+  <?php
+    echo "<h1 class='text-center'>PROFILO</h1>";
+    echo "<h1 class='text-center text-danger'>" . $_SESSION["username"] . "</h1>";
+    $selectUtente = "SELECT idUtente, nome, cognome, email, dataRegistrazione FROM utente WHERE username = '" . $_SESSION["username"] . "'";
+    $result = $conn -> query($selectUtente);
+    $row = $result -> fetch_assoc();
+    $selectNumRecensioni = "SELECT count(*) AS nRecensioni FROM recensione WHERE idUtente = '" . $row["idUtente"] . "'";
+    $result = $conn -> query($selectNumRecensioni);
+    $nRecensioni = $result -> fetch_assoc();
+    $selectUltimaData = "SELECT MAX(data) AS ultima_data FROM recensione WHERE idUtente = '" . $row["idUtente"] . "'";
+    $result = $conn -> query($selectUltimaData);
+
+    echo "<table class='table table-striped table-hover w-25 m-auto'>";
+    echo "<thead><tr><th class='text-center' colspan='2'>INFO</th></tr></thead>
+          <tr><td>Nome</td><td>" . $row["nome"] . "</td></tr>
+          <tr><td>Cognome</td><td>" . $row["cognome"] . "</td></tr>
+          <tr><td>Email</td><td>" . $row["email"] . "</td></tr>
+          <tr><td>Data di registrazione</td><td>" . $row["dataRegistrazione"] . "</td></tr>
+          <tr><td>Numero recensioni effetuate</td><td>" . $nRecensioni["nRecensioni"] . "</td></tr>";
+    if (!($result)) {
+      echo "<tr><td>Data dell'ultima data</td><td>Nessuna recensione effetuata</td></tr>";
+    } else {
+      $ultimaData = $result -> fetch_assoc();
+      echo "<tr><td>Data dell'ultima data</td><td>" . $ultimaData["ultima_data"] . "</td></tr>";
+    }
+    echo "</table>";
+  ?>
+  <br />
 
   <div class="col-10 border border-solid border-2 border-black m-auto text-center">
       <h2 class="text-center text-danger">Cambio password</h2>

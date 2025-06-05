@@ -100,7 +100,7 @@
     <form action="inseriscirecensione.php" method="get">
 
     <?php
-    $selectRistoranti = "SELECT nome FROM ristorante;";
+    $selectRistoranti = "SELECT nome FROM ristorante ORDER BY(nome);";
     $res = $conn->query($selectRistoranti);
     if (!$res) {
       echo "<h2 class='text-center text-danger'>Nessun ristorante trovato</h2>";
@@ -149,7 +149,7 @@
     <div class="col-10 border border-solid border-2 border-black rounded-pill m-auto text-center">
       <h2 class="text-center text-danger">Info ristoranti</h2>
     <?php
-    $selectRistoranti = "SELECT nome FROM ristorante;";
+    $selectRistoranti = "SELECT nome FROM ristorante ORDER BY (nome);";
     $res = $conn->query($selectRistoranti);
     if (!$res) {
       echo "<h2 class='text-danger'>Nessun ristorante trovato</h2>";
