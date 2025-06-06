@@ -23,6 +23,7 @@
                 $_SESSION["username"] = $username;
                 $_SESSION["admin"] = $elementi["admin"];
                 $_SESSION["admin"] = $elementi["admin"] == "1";
+                $_SESSION["login"] = true;
                 header("Location: benvenuto.php");
                 exit;
             } else {

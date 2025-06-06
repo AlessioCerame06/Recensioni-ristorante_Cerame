@@ -1,6 +1,9 @@
 <?php
   session_start();
   include("connessione/connessione.php");
+  if (!(isset($_SESSION["login"]))) {
+    header("Location: paginaLogin.php");
+  }
   if (isset($_SESSION["admin"]) && $_SESSION["admin"] === true) {
     header("Location: pannelloadmin.php");
     exit;

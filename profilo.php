@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (!(isset($_SESSION["login"]))) {
+  header("Location: paginaLogin.php");
+}
 include("connessione/connessione.php");
 ?>
 
