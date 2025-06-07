@@ -26,7 +26,8 @@ if (!isset($_SESSION['admin']) || $_SESSION['admin'] != true) {
 
 $sql = "SELECT r.*, COUNT(rec.idRecensione) as num_recensioni
         FROM ristorante r LEFT JOIN recensione rec ON r.codiceRistorante = rec.codiceRistorante
-        GROUP BY r.codiceRistorante";
+        GROUP BY r.codiceRistorante
+        ORDER BY (r.nome)";
     $result = $conn->query($sql);
 
 if ($result -> num_rows > 0) {
